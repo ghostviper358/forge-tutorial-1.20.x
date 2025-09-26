@@ -1,6 +1,8 @@
 package net.jasper.jaspertutorial;
 
 import com.mojang.logging.LogUtils;
+import net.jasper.jaspertutorial.item.ModItems;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
@@ -22,6 +24,8 @@ public final class JasperTutorial {
     public JasperTutorial(FMLJavaModLoadingContext context) {
         var modBusGroup = context.getModBusGroup();
 
+        ModItems.register(modBusGroup);
+
         FMLCommonSetupEvent.getBus(modBusGroup).addListener(this::commonSetup);
 
         BuildCreativeModeTabContentsEvent.getBus(modBusGroup).addListener(JasperTutorial::addCreative);
@@ -35,6 +39,9 @@ public final class JasperTutorial {
 
     // Add the example block item to the building blocks tab
     private static void addCreative(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+            event.accept(ModItems.SAPPHIRE);
+        }
 
     }
 
